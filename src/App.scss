@@ -52,3 +52,19 @@ button:before {
   z-index: 3;
   left: 19px;
 }
+
+.layout {
+  height: 100vh;
+
+  .header {
+    height: 100%;
+  
+    h1 {
+      margin: auto;
+    }
+  }
+
+  .content {
+    height: 100%;
+  }
+}
