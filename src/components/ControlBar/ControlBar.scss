@@ -1,0 +1,20 @@
+.control-bar-container {
+  position: absolute;
+  width: 100%;
+  max-width: 100%;
+  z-index:  2;
+  bottom: 0;
+  padding: 16px;
+
+  .buttons-container {
+    margin-top: .5rem;
+    width: 100%;
+
+    button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+    }
+  }
+}

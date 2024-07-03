@@ -1,9 +1,6 @@
-import { FC, RefObject, useEffect, useRef } from "react";
-
-export type ProgressBarProps = {
-  videoRef: RefObject<HTMLVideoElement>;
-  handleSeekToPos: (position: number) => void;
-};
+import "./ProgressBar.scss";
+import { FC, useEffect, useRef } from "react";
+import { ProgressBarProps } from "./types";
 
 export const ProgressBar: FC<ProgressBarProps> = ({ handleSeekToPos, videoRef }) => {
   if (!videoRef) return <></>;
@@ -40,40 +37,18 @@ export const ProgressBar: FC<ProgressBarProps> = ({ handleSeekToPos, videoRef })
     };
   }, [videoRef]);
 
+  const handleProgressBarCick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    const { left, width } = e.currentTarget.getBoundingClientRect();
+    const clickedPos = (e.clientX - left) / width;
+    handleSeekToPos(clickedPos);
+  };
+
   return (
-    <div style={{ width: "100%", position: "relative", cursor: "pointer" }}>
-      <div
-        onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-          const { left, width } = e.currentTarget.getBoundingClientRect();
-          const clickedPos = (e.clientX - left) / width;
-          handleSeekToPos(clickedPos);
-        }}
-        style={{
-          height: 4,
-          position: "absolute",
-          zIndex: 3,
-          width: "100%",
-        }}
-      />
-      <div
-        style={{
-          height: 4,
-          background: "#FFF",
-          position: "absolute",
-          zIndex: 2,
-        }}
-        ref={progressRef}
-      />
-      <div
-        style={{
-          height: 4,
-          background: "#C1C1C1",
-          position: "absolute",
-          zIndex: 1,
-        }}
-        ref={bufferRef}
-      />
-      <div style={{ height: 4, background: "#8f8f8f" }} />
+    <div className="progress-bar-container">
+      <div onClick={handleProgressBarCick} className="progress-bar-invisible" />
+      <div className="progress-bar-white" ref={progressRef} />
+      <div className="progress-bar-buffer" ref={bufferRef} />
+      <div className="progress-bar-default" />
     </div>
   );
 };

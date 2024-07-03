@@ -1,7 +1,7 @@
 import "./App.scss";
 import { Flex, Layout, Typography } from "antd";
 import { Content, Header } from "antd/es/layout/layout";
-import { VideoComponent } from "./components";
+import { Credits, VideoComponent } from "./components";
 
 function App() {
   return (
@@ -12,8 +12,9 @@ function App() {
         </Flex>
       </Header>
       <Content>
-        <Flex className="content" justify="center">
+        <Flex className="content" align="center" vertical gap="middle">
           <VideoComponent />
+          <Credits />
         </Flex>
       </Content>
     </Layout>

@@ -1,3 +1,4 @@
+import "./TimeTracker.scss";
 import { Flex, Typography } from "antd";
 
 export const TimeTracker = ({ elapsedSec, duration }: { elapsedSec: number; duration: number }) => {
@@ -15,8 +16,8 @@ export const TimeTracker = ({ elapsedSec, duration }: { elapsedSec: number; dura
     .padStart(2, "0");
 
   return (
-    <Flex style={{ marginRight: "auto" }}>
-      <Typography style={{ color: "white", fontWeight: "bold" }}>
+    <Flex className="time-tracker-container">
+      <Typography className="typography">
         {minutesElapsed}:{secondsElapsed} / {totalMinutesElapsed}:{totalSecondsElapsed}
       </Typography>
     </Flex>

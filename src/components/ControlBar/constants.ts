@@ -20,10 +20,6 @@ export const SPEED_DROPDOWN_ITEMS = [
     value: 16,
   },
   {
-    label: "16.1x",
-    value: 16.1,
-  },
-  {
     label: "32x",
     value: 32,
   },

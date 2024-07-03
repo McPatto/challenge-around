@@ -1,7 +1,8 @@
+import "./ControlBar.scss";
 import { BackwardOutlined, PauseOutlined, CaretRightOutlined, XFilled, MutedFilled, SoundFilled } from "@ant-design/icons";
 import { Flex, Button, Dropdown, Select, MenuProps, Slider } from "antd";
 import { TimeTracker } from "./TimeTracker/TimeTracker";
-import { ProgressBar, ProgressBarProps } from "./ProgressBar/ProgressBar";
+import { ProgressBar, ProgressBarProps } from "./ProgressBar";
 import { FC, RefObject, useEffect, useState } from "react";
 import { SPEED_DROPDOWN_ITEMS } from "./constants";
 
@@ -58,21 +59,9 @@ export const ControlBar: FC<ControlBarProps> = ({
   ];
 
   return (
-    <Flex
-      vertical
-      style={{
-        position: "absolute",
-        width: "100%",
-        maxWidth: "100%",
-        zIndex: 2,
-        bottom: 0,
-        padding: 16,
-      }}
-      align="center"
-      gap="small"
-    >
+    <Flex vertical className="control-bar-container" align="center" gap="small">
       <ProgressBar videoRef={videoRef} handleSeekToPos={handleSeekToPos} />
-      <Flex align="center" gap="small" style={{ width: "100%" }}>
+      <Flex align="center" gap="small" className="buttons-container">
         <Button onClick={handleRewind} shape="circle" icon={<BackwardOutlined />} />
         <Button onClick={handlePlayButton} icon={isPlaying ? <PauseOutlined /> : <CaretRightOutlined />} shape="circle" />
         <Button onClick={handleStopButton} icon={<XFilled />} shape="circle" />
@@ -80,7 +69,7 @@ export const ControlBar: FC<ControlBarProps> = ({
         <Dropdown menu={{ items: volumeDropdownItem }} arrow placement="top">
           <Button onClick={handleMuteVideo} icon={isVideoMuted ? <MutedFilled /> : <SoundFilled />} shape="circle" />
         </Dropdown>
-        <Select defaultValue={1} style={{ width: 70 }} onChange={handleChangeSpeed} value={playbackSpeed} options={SPEED_DROPDOWN_ITEMS} placement="topLeft" />
+        <Select defaultValue={1} onChange={handleChangeSpeed} value={playbackSpeed} options={SPEED_DROPDOWN_ITEMS} placement="topLeft" />
       </Flex>
     </Flex>
   );
