@@ -16,5 +16,5 @@ const ITEM = [
 ];
 
 export const Credits = () => {
-  return <Collapse style={{ width: "800px" }} items={ITEM} />;
+  return <Collapse style={{ width: "100%" }} items={ITEM} />;
 };

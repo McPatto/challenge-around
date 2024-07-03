@@ -11,6 +11,7 @@ export const VideoComponent = () => {
   const video = videoRef.current;
   const [playbackSpeed, setPlaybackSpeed] = useState(1);
   const [rewind, setRewind] = useState(false);
+  const [showControls, setShowControls] = useState(false);
 
   useEffect(() => {
     if (!video) return;
@@ -88,22 +89,34 @@ export const VideoComponent = () => {
 
   if (rewind && video?.currentTime === 0) setRewind(false);
 
+  const handleShowControls = () => {
+    setShowControls(true);
+  };
+
+  const handleHideControls = () => {
+    setShowControls(false);
+  };
+
   return (
-    <Flex className="video-component-container" align="center" vertical>
-      <div className="video-shadow" />
-      <ControlBar
-        videoRef={videoRef}
-        handleRewind={handleRewind}
-        handlePlayButton={handlePlayButton}
-        handleStopButton={handleStopButton}
-        handleMuteVideo={handleMuteVideo}
-        handleChangeSpeed={handleChangeSpeed}
-        handleSeekToPos={seekToPosition}
-        handleChangeVolume={handleChangeVolume}
-        isPlaying={isPlaying}
-        isVideoMuted={isVideoMuted}
-        playbackSpeed={playbackSpeed}
-      />
+    <Flex className="video-component-container" align="center" vertical onMouseOver={handleShowControls} onMouseLeave={handleHideControls}>
+      {showControls && (
+        <>
+          <div className="video-shadow" />
+          <ControlBar
+            videoRef={videoRef}
+            handleRewind={handleRewind}
+            handlePlayButton={handlePlayButton}
+            handleStopButton={handleStopButton}
+            handleMuteVideo={handleMuteVideo}
+            handleChangeSpeed={handleChangeSpeed}
+            handleSeekToPos={seekToPosition}
+            handleChangeVolume={handleChangeVolume}
+            isPlaying={isPlaying}
+            isVideoMuted={isVideoMuted}
+            playbackSpeed={playbackSpeed}
+          />
+        </>
+      )}
       <Video ref={videoRef} />
     </Flex>
   );
