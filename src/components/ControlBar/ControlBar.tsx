@@ -53,7 +53,7 @@ export const ControlBar: FC<ControlBarProps> = ({
         <Dropdown menu={{ items: volumeDropdownItem }} arrow placement="top" className="dropdown">
           <Button onClick={handleMuteVideo} icon={isVideoMuted ? <MutedFilled /> : <SoundFilled />} shape="circle" />
         </Dropdown>
-        <Select defaultValue={1} onChange={handleChangeSpeed} value={playbackSpeed} options={SPEED_DROPDOWN_ITEMS} placement="topLeft" />
+        <Select className="select" defaultValue={1} onChange={handleChangeSpeed} value={playbackSpeed} options={SPEED_DROPDOWN_ITEMS} placement="topLeft" />
       </Flex>
     </Flex>
   );

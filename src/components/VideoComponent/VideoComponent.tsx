@@ -17,11 +17,14 @@ export const VideoComponent = () => {
   useEffect(() => {
     if (!video) return;
 
-    if (playbackSpeed <= 16) video.playbackRate = playbackSpeed;
+    video.playbackRate = playbackSpeed <= 16 && !rewind ? playbackSpeed : 1;
 
+    let intervalRewindId: NodeJS.Timer;
     let intervalId: NodeJS.Timer;
+
     if (rewind) {
-      intervalId = setInterval(() => {
+      if (video?.currentTime === 0) return setRewind(false);
+      intervalRewindId = setInterval(() => {
         video.currentTime = video.currentTime - 0.049 * playbackSpeed;
       }, 50);
     }
@@ -35,7 +38,10 @@ export const VideoComponent = () => {
       }, intervalFinish);
     }
 
-    return () => clearInterval(intervalId);
+    return () => {
+      clearInterval(intervalRewindId);
+      clearInterval(intervalId);
+    };
   }, [playbackSpeed, rewind]);
 
   const handlePlayButton = () => {
@@ -87,8 +93,6 @@ export const VideoComponent = () => {
     handlePlayButton();
     setRewind((currState) => !currState);
   };
-
-  if (rewind && video?.currentTime === 0) setRewind(false);
 
   const handleShowControls = () => {
     setShowControls(true);

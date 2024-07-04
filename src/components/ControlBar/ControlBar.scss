@@ -16,5 +16,12 @@
       justify-content: center;
       gap: 0;
     }
+
+    .select {
+      width: 64px;
+      .ant-select-selection-item {
+        padding-inline-end: 0px;
+      }
+    }
   }
 }
