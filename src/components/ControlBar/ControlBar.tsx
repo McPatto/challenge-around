@@ -3,8 +3,9 @@ import { BackwardOutlined, PauseOutlined, CaretRightOutlined, XFilled, MutedFill
 import { Flex, Button, Dropdown, Select, MenuProps, Slider } from "antd";
 import { TimeTracker } from "./TimeTracker/TimeTracker";
 import { ProgressBar, ProgressBarProps } from "./ProgressBar";
-import { FC, RefObject, useEffect, useState } from "react";
+import { FC, RefObject } from "react";
 import { SPEED_DROPDOWN_ITEMS } from "./constants";
+import { useVideo } from "../../helpers/useVideo";
 
 type ControlBarProps = ProgressBarProps & {
   videoRef: RefObject<HTMLVideoElement>;
@@ -32,24 +33,7 @@ export const ControlBar: FC<ControlBarProps> = ({
   isVideoMuted,
   playbackSpeed,
 }) => {
-  const [ellapsedTime, setEllapsedTime] = useState(0);
-  const [duration, setDuration] = useState(0);
-
-  useEffect(() => {
-    const video = videoRef?.current;
-    if (!video) return;
-
-    const handleTimeUpdate = () => {
-      setDuration(video.duration);
-      setEllapsedTime(video.currentTime);
-    };
-
-    video.addEventListener("timeupdate", handleTimeUpdate);
-
-    return () => {
-      video.removeEventListener("timeupdate", handleTimeUpdate);
-    };
-  }, [videoRef]);
+  const { duration, ellapsedTime } = useVideo(videoRef);
 
   const volumeDropdownItem: MenuProps["items"] = [
     {
@@ -66,7 +50,7 @@ export const ControlBar: FC<ControlBarProps> = ({
         <Button onClick={handlePlayButton} icon={isPlaying ? <PauseOutlined /> : <CaretRightOutlined />} shape="circle" />
         <Button onClick={handleStopButton} icon={<XFilled />} shape="circle" />
         <TimeTracker elapsedSec={ellapsedTime} duration={duration} />
-        <Dropdown menu={{ items: volumeDropdownItem }} arrow placement="top">
+        <Dropdown menu={{ items: volumeDropdownItem }} arrow placement="top" className="dropdown">
           <Button onClick={handleMuteVideo} icon={isVideoMuted ? <MutedFilled /> : <SoundFilled />} shape="circle" />
         </Dropdown>
         <Select defaultValue={1} onChange={handleChangeSpeed} value={playbackSpeed} options={SPEED_DROPDOWN_ITEMS} placement="topLeft" />

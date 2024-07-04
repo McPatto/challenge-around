@@ -3,6 +3,7 @@ import { Flex } from "antd";
 import { ControlBar } from "../ControlBar/ControlBar";
 import { Video } from "../Video";
 import { useState, useRef, useEffect } from "react";
+import clsx from "clsx";
 
 export const VideoComponent = () => {
   const [isVideoMuted, setIsVideoMuted] = useState(false);
@@ -99,24 +100,26 @@ export const VideoComponent = () => {
 
   return (
     <Flex className="video-component-container" align="center" vertical onMouseOver={handleShowControls} onMouseLeave={handleHideControls}>
-      {showControls && (
-        <>
-          <div className="video-shadow" />
-          <ControlBar
-            videoRef={videoRef}
-            handleRewind={handleRewind}
-            handlePlayButton={handlePlayButton}
-            handleStopButton={handleStopButton}
-            handleMuteVideo={handleMuteVideo}
-            handleChangeSpeed={handleChangeSpeed}
-            handleSeekToPos={seekToPosition}
-            handleChangeVolume={handleChangeVolume}
-            isPlaying={isPlaying}
-            isVideoMuted={isVideoMuted}
-            playbackSpeed={playbackSpeed}
-          />
-        </>
-      )}
+      <div
+        className={clsx("controls-container", {
+          hide: !showControls,
+        })}
+      >
+        <div className="video-shadow" />
+        <ControlBar
+          videoRef={videoRef}
+          handleRewind={handleRewind}
+          handlePlayButton={handlePlayButton}
+          handleStopButton={handleStopButton}
+          handleMuteVideo={handleMuteVideo}
+          handleChangeSpeed={handleChangeSpeed}
+          handleSeekToPos={seekToPosition}
+          handleChangeVolume={handleChangeVolume}
+          isPlaying={isPlaying}
+          isVideoMuted={isVideoMuted}
+          playbackSpeed={playbackSpeed}
+        />
+      </div>
       <Video ref={videoRef} />
     </Flex>
   );
